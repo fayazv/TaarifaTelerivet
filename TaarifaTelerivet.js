@@ -13,7 +13,7 @@ var data = {
   "service_code": "wps001",
   "attribute": {
     "waterpoint_id": parts[0],
-    "status": parts[1]
+    "status_group": parts[1]
   }
 };
 var url = "https://iringa.herokuapp.com/api/requests"
