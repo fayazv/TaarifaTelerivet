@@ -1,7 +1,7 @@
-//splits the message into multiple parts, i.e. structured text messages
+// Splits the message into multiple parts, i.e. structured text messages
 var parts = content.split(/#/g);
 
-//if the message does not come in two parts send out a new message, otherwise procede to the webhook
+// If the message does not come in two parts send out a new message
 if (parts.length != 2) {
   sendReply("Invalid message format!\n" +
             "Kama kituo cha maji hakifanyi kazi!\n" +
@@ -10,11 +10,7 @@ if (parts.length != 2) {
   return;
 }
 
-sendReply("Your report has been recorded!\n" +
-          "Asante kwa ujumbe wako!\n" +
-          "waterpoint/kituo cha maji: " + parts[0] + "\n" +
-          "Status/hadhi: " + parts[1] + "\n");
-
+// Otherwise proceed to the webhook
 var data = {
   "service_code": "wps001",
   "attribute": {
@@ -34,3 +30,19 @@ var response = httpClient.request(url, {
 });
 // Log to the Telerivert console
 console.log("Response from server:", response.content);
+
+if (response.status == 200) {
+  sendReply("Your report has been recorded!\n" +
+            "Asante kwa ujumbe wako!\n" +
+            "waterpoint/kituo cha maji: " + parts[0] + "\n" +
+            "Status/hadhi: " + parts[1] + "\n");
+} else {
+  err = JSON.parse(response.content)._issues.attribute;
+  errmsg = "";
+  for (p in err) {
+    errmsg += p + ": " + err[p] + "\n"
+  }
+  // FIXME: translation needed!
+  sendReply("Your report could not be recorded!\n" +
+            "Errors:\n" + errmsg);
+}
