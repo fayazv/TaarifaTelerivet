@@ -3,11 +3,17 @@ var parts = content.split(/#/g);
 
 //if the message does not come in two parts send out a new message, otherwise procede to the webhook
 if (parts.length != 2) {
-  sendReply("Invalid message format\n." + "kama kituo cha maji hakifanyi kazi\n" + "Please use name#status\n" + "jina la kituo cha maji#not functional");
+  sendReply("Invalid message format!\n" +
+            "Kama kituo cha maji hakifanyi kazi!\n" +
+            "Please use 'waterpoint_id#status'\n" +
+            "Jina la 'kituo_cha_maji#hadhi'");
   return;
 }
 
-sendReply("Your report has been recorded!\n" + "Asante kwa ujumbe wako" + "wp/kituo cha maji: " + parts[0] + "\n" + "Num Status/hadhi: " + parts[1] + "\n");
+sendReply("Your report has been recorded!\n" +
+          "Asante kwa ujumbe wako!\n" +
+          "waterpoint/kituo cha maji: " + parts[0] + "\n" +
+          "Status/hadhi: " + parts[1] + "\n");
 
 var data = {
   "service_code": "wps001",
